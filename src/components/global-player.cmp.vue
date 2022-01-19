@@ -277,7 +277,7 @@ export default {
 		created() {
 		// socketService.setup();
 		// socketService.emit('join room',this.$route.params.mixId);
-		// console.log('JOINED ROOM GLOBAL :',this.currMix);
+		console.log('JOINED ROOM GLOBAL :',this.currMix);
 		//$on.. lisiting to event "pause-music"
 		eventBus.$on("pause-music", () => {
 			this.pause();

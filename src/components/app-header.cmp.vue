@@ -18,10 +18,10 @@
 
         <img class="imgroot" src="https://res.cloudinary.com/hw-projects/image/upload/v1607380891/appmixes/imgroot200x200.gif" />
         <nav class="main-nav">
-        <div class="nav-mix">
+        <!-- <div class="nav-mix">
             <router-link to="/mix/list">Mixes</router-link> 
             <a @click="createNewPlaylist" >Create Mix</a>
-        </div> 
+        </div>  -->
        <navbar /> 
         <div class="nav-user-pos">
             <div class="nav-user">

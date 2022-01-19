@@ -102,10 +102,11 @@ export default {
             // console.log('setGenre',state.genre)
         },
         setCurrSong(state, payload) {
-            //console.log('setCurrSong state.genre',state)
-            if (!this.currMix) return
+            console.log('setCurrSong state this.currMix',this.currMix )
+            // if (!this.currMix) return
             state.currSongPlaying = payload.song;
             state.currSongPlaying.isPlaying = true;
+            console.log('setCurrSong state payload',state.currSongPlaying , state.currSongPlaying.isPlaying)
         },
         removeCurrSong(state, payload) {
             const idx = state.mixes[state.currMix._id].songs.findIndex(song => song.id === payload.song.id);

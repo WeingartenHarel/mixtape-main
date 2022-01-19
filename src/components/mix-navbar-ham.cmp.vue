@@ -39,8 +39,16 @@
             ]
           }
         }
-      }
-      
+      },
+      methods: {
+        createMix(){
+            this.$store.commit({
+              type: "setMix",
+              mix:null,
+            }); 
+        },
+      },
+
   }
 </script>
  
