@@ -79,7 +79,26 @@
                 
             }
         }
-
+        .reply-to{
+            margin-right: 5px;
+        }
+        .reply-button{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #BE1E2D;
+            border: none;
+            margin-left: 5px;
+            padding: 1px 3px;
+            border-radius: 20px;
+        }
+        .reply-img{
+            width:20px;
+            height: 20px;
+        }
+        .active{
+            background: #52a222;
+        }
     }
     .chat-form{
         overflow:auto;

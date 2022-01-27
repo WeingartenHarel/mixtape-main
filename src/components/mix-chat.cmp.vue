@@ -15,11 +15,19 @@
           </div>
         </li>
         <li v-for="(mesg, idx) in msgs" :key="idx">
+          <p class="reply-to" v-if="mesg.replyToMsg">Reply to : "{{mesg.replyToMsg}}"</p>
           <p v-if="mesg.txt" class="msg">{{ mesg.name }}: {{ mesg.txt }}</p>
           <div v-if="mesg.gif">
             {{ mesg.name }}:
             <img :src="mesg.gif" class="gif" />
           </div>
+          <button
+            class="reply-button"
+            v-bind:class="{ active: mesg.isReply }"
+            @click="onIsReply(mesg._id)"
+          >
+            <img  class="reply-img" src="https://res.cloudinary.com/hw-projects/image/upload/v1643232966/appmixes/reply-solid.png"/>
+          </button>
         </li>
       </ul>
     </div>
@@ -70,9 +78,12 @@ export default {
   data() {
     return {
       msg: {
+        _id:null,
         name: null,
+        replyToMsg:null,
         txt: '',
         gif: '',
+        isReply:false,
       },
       msgsHistory: [],
       msgs: [],
@@ -101,6 +112,27 @@ export default {
     // }
   },
   methods: {
+    resetMsgsReply(){
+      this.msgs.map(msg=>msg.isReply = false)
+    },
+    onIsReply(msgID){
+      this.resetMsgsReply()
+      let msgIndex = this.msgs.findIndex(msg => msg._id===msgID)
+      this.msgs[msgIndex].isReply = !this.msgs[msgIndex].isReply
+      this.msg.replyToMsg = this.msgs[msgIndex].txt
+      // this.msgToReply = this.msgs[msgIndex];
+      //console.log('onIsReply msgs ',this.msgs)
+    },
+    _makeId(length = 9) {
+      var txt = "_idMsg";
+      var possible =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+      for (var i = 0; i < length; i++) {
+        txt += possible.charAt(Math.floor(Math.random() * possible.length));
+      }
+      console.log('_makeId txt', txt)
+      return txt;
+    },
     sendMsgWhatsapp() {
       this.$store.dispatch({ type: "sendMsgWhatsApp" });
     },
@@ -110,10 +142,18 @@ export default {
             }else{
                 this.msg.name = 'Guest'
             }
-            socketService.emit('send message',{msg:this.msg,roomId:this.room});
+            this.msg._id = this._makeId();
+            socketService.emit('send message',{        
+                msg:this.msg, 
+                roomId:this.room ,   
+              });
+            this.msg._id= null,
             this.msg.txt = '';
+            this.msg.replyToMsg = null;
             this.msg.gif = '';
             this.msg.name = '';
+            this.msg.isReply = false;
+            this.msgs.map(msg => msg.isReply = false);
         },
     isTypingNow() {
       socketService.emit('is typing', this.isTyping)
